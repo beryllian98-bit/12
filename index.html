@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>拾光收音機情緒分析</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app">
+      <section class="panel hero">
+        <div>
+          <p class="eyebrow">Live microphone emotion analysis</p>
+          <h1>拾光收音機情緒分析</h1>
+          <p class="status" id="statusText">選擇音樂資料夾後，按下開始即可用電腦麥克風偵測情緒。</p>
+        </div>
+        <div class="meter" aria-label="audio level">
+          <div class="meter-fill" id="levelMeter"></div>
+        </div>
+      </section>
+
+      <section class="panel controls">
+        <div class="locked-library">
+          <span>固定音樂庫</span>
+          <strong>108 首</strong>
+        </div>
+        <label class="folder-picker">
+          <span>選電腦音訊</span>
+          <input id="audioFileInput" type="file" accept="audio/*">
+        </label>
+        <button id="startButton" type="button">麥克風錄音分析</button>
+        <button id="playDetectedButton" type="button" disabled>播放偵測音樂</button>
+        <button id="stopButton" type="button" disabled>停止</button>
+      </section>
+
+      <section class="dashboard">
+        <div class="panel emotion-card">
+          <span class="label">目前情緒</span>
+          <strong id="emotionText">unknown</strong>
+          <span id="confidenceText">confidence 0%</span>
+        </div>
+        <div class="panel track-card">
+          <span class="label">播放音樂</span>
+          <strong id="trackText">尚未選擇音樂</strong>
+          <audio id="player" controls></audio>
+        </div>
+      </section>
+
+      <section class="panel emotion-grid" id="emotionGrid" aria-label="emotion folders"></section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
