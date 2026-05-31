@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拾光收音機 | 用音樂守護記憶</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入溫慢手寫風 Klee One 與典雅宋體 Noto Serif TC -->
+    <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 全站套用溫慢手寫字體，並以標楷體與宋體作為優雅的系統備用字 */
+        body {
+            font-family: 'Klee One', 'Noto Serif TC', 'DFKai-SB', 'BiauKai', serif;
+        }
+        /* 標題套用古典書法結構的字體 */
+        h1, h2, h3, h4, .font-calligraphy {
+            font-family: 'Noto Serif TC', 'DFKai-SB', 'BiauKai', serif;
+            font-weight: 700;
+        }
+        
+        /* 輕甜彌散風：薄荷綠、晴空藍與櫻花粉的柔和漸層 */
+        .hero-gradient {
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 50%, #fdf2f8 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(244, 63, 94, 0.15);
+        }
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        /* 淺色毛玻璃徽章 */
+        .glass-morphism-light {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+        .animate-pulse-soft {
+            animation: pulse-soft 3s infinite ease-in-out;
+        }
+        
+        /* 輕盈飄逸的音符漂浮動畫 */
+        @keyframes float-1 {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+            50% { transform: translateY(-30px) scale(1.05) rotate(5deg); }
+        }
+        @keyframes float-2 {
+            0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+            50% { transform: translateY(-20px) translateX(15px) rotate(-8deg); }
+        }
+        @keyframes float-3 {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+            50% { transform: translateY(25px) scale(0.95) rotate(6deg); }
+        }
+        @keyframes float-4 {
+            0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+            50% { transform: translateY(-15px) translateX(-20px) rotate(-10deg); }
+        }
+        @keyframes float-5 {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+            50% { transform: translateY(-35px) scale(1.08) rotate(12deg); }
+        }
+        .animate-float-1 { animation: float-1 8s infinite ease-in-out; }
+        .animate-float-2 { animation: float-2 10s infinite ease-in-out; }
+        .animate-float-3 { animation: float-3 9s infinite ease-in-out; }
+        .animate-float-4 { animation: float-4 7s infinite ease-in-out; }
+        .animate-float-5 { animation: float-5 11s infinite ease-in-out; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 leading-relaxed">
+
+    <!-- 導覽列 -->
+    <nav class="fixed w-full z-50 glass-morphism shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- 拾光收音機 圖片 Logo -->
+                <div class="flex items-center space-x-3">
+                    <img src="image_21aef6.jpg" alt="拾光收音機 Logo" class="h-14 w-auto object-contain rounded-full shadow-md">
+                    <span class="text-2xl font-bold tracking-tight text-amber-950 flex items-center gap-1.5 font-calligraphy">
+                        拾光收音機
+                    </span>
+                </div>
+                <!-- 導覽連結項目：同步將科學實證改為拾光能量 -->
+                <div class="hidden md:flex space-x-6 lg:space-x-8 items-center">
+                    <a href="#brand-story" class="hover:text-amber-600 font-medium transition-colors text-sm lg:text-base">品牌故事</a>
+                    <a href="#design-details" class="hover:text-amber-600 font-medium transition-colors text-sm lg:text-base">設計巧思</a>
+                    <a href="#audience" class="hover:text-amber-600 font-medium transition-colors text-sm lg:text-base">三大客群</a>
+                    <a href="#science" class="hover:text-amber-600 font-medium transition-colors text-sm lg:text-base">拾光能量</a>
+                    <a href="#demo" class="hover:text-amber-600 font-medium transition-colors text-sm lg:text-base">產品體驗</a>
+                    <a href="#cta" class="bg-amber-600 text-white px-5 py-2 rounded-full hover:bg-amber-700 transition-all shadow-md flex items-center gap-1 text-sm lg:text-base">
+                        <svg class="w-4 h-4 fill-current text-white" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4(15.36)2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        立即預約
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄區塊：輕柔、夢幻的「大腦總部晨光」與「特大號多巴胺無框音符」（無中央大LOGO） -->
+    <header class="relative pt-36 pb-28 lg:pt-52 lg:pb-40 hero-gradient overflow-hidden">
+        
+        <!-- 背景柔美、溫暖的輕霧彩光（彌散效果） -->
+        <div class="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-rose-200/40 rounded-full blur-[100px] animate-pulse-soft"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-amber-200/40 rounded-full blur-[120px] animate-pulse-soft" style="animation-delay: 1.5s;"></div>
+        <div class="absolute top-1/2 right-1/3 w-[350px] h-[350px] bg-sky-200/40 rounded-full blur-[90px] animate-pulse-soft" style="animation-delay: 3s;"></div>
+
+        <!-- 柔和 3D 無邊框多巴胺音符 -->
+        
+        <!-- 1. 櫻花粉八分音符 (Peach Pink Eighth Note) -->
+        <div class="absolute animate-float-1 top-[15%] left-[5%] z-10 w-36 h-36 filter drop-shadow-[0_15px_30px_rgba(244,63,94,0.35)]">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                <defs>
+                    <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#fda4af" />
+                        <stop offset="50%" stop-color="#f43f5e" />
+                        <stop offset="100%" stop-color="#be123c" />
+                    </linearGradient>
+                </defs>
+                <ellipse cx="32" cy="72" rx="16" ry="12" transform="rotate(-15 32 72)" fill="url(#pinkGradient)" />
+                <rect x="42" y="15" width="10" height="58" rx="4" fill="url(#pinkGradient)" />
+                <path d="M52 15C68 18 80 30 76 45C72 52 64 52 58 45V15z" fill="url(#pinkGradient)" />
+            </svg>
+        </div>
+
+        <!-- 2. 薰衣草紫雙音符 (Lavender Purple Beamed Notes) -->
+        <div class="absolute animate-float-2 top-[25%] right-[6%] z-10 w-44 h-44 filter drop-shadow-[0_15px_30px_rgba(139,92,246,0.35)]">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                <defs>
+                    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#c084fc" />
+                        <stop offset="50%" stop-color="#8b5cf6" />
+                        <stop offset="100%" stop-color="#5b21b6" />
+                    </linearGradient>
+                </defs>
+                <ellipse cx="25" cy="70" rx="14" ry="10" transform="rotate(-15 25 70)" fill="url(#purpleGradient)" />
+                <ellipse cx="70" cy="58" rx="14" ry="10" transform="rotate(-15 70 58)" fill="url(#purpleGradient)" />
+                <rect x="34" y="16" width="8" height="54" rx="3" fill="url(#purpleGradient)" />
+                <rect x="79" y="4" width="8" height="54" rx="3" fill="url(#purpleGradient)" />
+                <path d="M38 16L83 4V16L38 28V16z" fill="url(#purpleGradient)" />
+            </svg>
+        </div>
+
+        <!-- 3. 向日葵黃四分音符 (Sunflower Yellow Quarter Note) -->
+        <div class="absolute animate-float-3 bottom-[18%] left-[7%] z-10 w-28 h-28 filter drop-shadow-[0_12px_25px_rgba(245,158,11,0.35)]">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                <defs>
+                    <linearGradient id="yellowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#fef08a" />
+                        <stop offset="50%" stop-color="#eab308" />
+                        <stop offset="100%" stop-color="#ca8a04" />
+                    </linearGradient>
+                </defs>
+                <ellipse cx="32" cy="68" rx="16" ry="12" transform="rotate(-15 32 68)" fill="url(#yellowGradient)" />
+                <rect x="42" y="15" width="10" height="54" rx="4" fill="url(#yellowGradient)" />
+            </svg>
+        </div>
+
+        <!-- 4. 湖水藍圓潤音符符號 (Vibrant Teal Smooth Note) -->
+        <div class="absolute animate-float-4 bottom-[22%] right-[10%] z-10 w-32 h-32 filter drop-shadow-[0_15px_30px_rgba(6,182,212,0.35)]">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                <defs>
+                    <linearGradient id="tealGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#67e8f9" />
+                        <stop offset="50%" stop-color="#06b6d4" />
+                        <stop offset="100%" stop-color="#0891b2" />
+                    </linearGradient>
+                </defs>
+                <ellipse cx="48" cy="80" rx="16" ry="12" transform="rotate(-15 48 80)" fill="url(#tealGradient)" />
+                <rect x="58" y="22" width="10" height="58" rx="4" fill="url(#tealGradient)" />
+                <circle cx="58" cy="22" r="14" fill="url(#tealGradient)" />
+            </svg>
+        </div>
+
+        <!-- 5. 活力珊瑚橘十六分音符 (Coral Orange Sixteenth Note) -->
+        <div class="absolute animate-float-5 bottom-[10%] left-[38%] z-10 w-32 h-32 filter drop-shadow-[0_15px_30px_rgba(249,115,22,0.35)]">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                <defs>
+                    <linearGradient id="orangeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ffedd5" />
+                        <stop offset="50%" stop-color="#f97316" />
+                        <stop offset="100%" stop-color="#ea580c" />
+                    </linearGradient>
+                </defs>
+                <ellipse cx="30" cy="72" rx="14" ry="10" transform="rotate(-15 30 72)" fill="url(#orangeGradient)" />
+                <rect x="39" y="15" width="9" height="58" rx="3.5" fill="url(#orangeGradient)" />
+                <path d="M48 15C62 17 72 26 68 36C64 42 56 42 52 36V15z" fill="url(#orangeGradient)" />
+                <path d="M48 31C62 33 72 42 68 52C64 58 56 58 52 52V31z" fill="url(#orangeGradient)" />
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto">
+                
+                <!-- 溫馨小徽章 -->
+                <span class="inline-flex items-center gap-1.5 px-4 py-1.5 mb-6 text-sm font-semibold tracking-wide text-rose-600 bg-rose-50/80 border border-rose-100/60 rounded-full shadow-sm">
+                    <svg class="w-4 h-4 text-rose-500 fill-current animate-pulse" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4(15.36)2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    AI 醫療科技的溫柔陪伴
+                </span>
+                
+                <!-- 大標題 -->
+                <h1 class="text-5xl lg:text-7xl font-extrabold text-slate-900 mb-6 leading-tight">
+                    拾光收音機<br><span class="text-amber-600 drop-shadow-[0_2px_8px_rgba(217,119,6,0.1)]">用音樂守護記憶</span>
+                </h1>
+                
+                <p class="text-xl text-slate-600 mb-10 leading-relaxed max-w-2xl mx-auto font-light">
+                    融合先進 AI 情緒偵測與精準音樂治療（RMT），我們不只播放音樂，更為失智長者重新開啟與世界的連結之窗。
+                </p>
+                
+                <!-- 按鈕列：完整整合三個按鈕 -->
+                <div class="flex flex-col sm:flex-row justify-center gap-4 flex-wrap">
+                    <!-- 如何成為我們的一份子？ -->
+                    <a href="#audience" class="px-8 py-4 bg-amber-600 text-white font-bold rounded-xl shadow-lg hover:bg-amber-700 hover:scale-105 transition-all text-lg flex items-center justify-center gap-2">
+                        <span>如何成為我們的一份子？</span>
+                        <span class="text-xl">💛</span>
+                    </a>
+                    <!-- 為您設計的小巧思~! 💡 -->
+                    <a href="#design-details" class="px-8 py-4 bg-rose-500 text-white font-bold rounded-xl shadow-lg hover:bg-rose-600 hover:scale-105 transition-all text-lg flex items-center justify-center gap-2">
+                        <span>為您設計的小巧思~!</span>
+                        <span class="text-xl">💡</span>
+                    </a>
+                    <!-- 拾光能量的來源✨ -->
+                    <a href="#science" class="px-8 py-4 bg-white/80 text-slate-700 font-bold rounded-xl shadow-sm border border-slate-200/60 hover:bg-white hover:scale-105 transition-all text-lg flex items-center justify-center gap-2">
+                        <span>拾光能量的來源✨</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 功能特色與品牌故事區塊 -->
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-stretch">
+                
+                <!-- 左側：品牌故事區塊 -->
+                <div id="brand-story" class="lg:col-span-5 flex flex-col justify-center bg-gradient-to-br from-rose-50/60 via-amber-50/50 to-orange-50/40 p-8 sm:p-12 rounded-[2.5rem] border border-rose-100 shadow-sm relative overflow-hidden scroll-mt-24">
+                    <!-- 背景柔和光暈與愛心裝飾 -->
+                    <div class="absolute -right-12 -bottom-12 w-48 h-48 bg-rose-200 rounded-full blur-3xl opacity-40"></div>
+                    <div class="absolute -left-12 -top-12 w-48 h-48 bg-amber-100 rounded-full blur-3xl opacity-30"></div>
+                    
+                    <div class="relative z-10">
+                        <!-- 溫馨擁抱與愛心大圖標 -->
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 bg-rose-100 rounded-2xl flex items-center justify-center text-rose-600 shadow-sm">
+                                <!-- 擁抱雙手包裹愛心 SVG -->
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21.35l-1.45-1.32C5.4(15.36)2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 10c.5 1 1.5 2 4 2s3.5-1 4-2"/>
+                                </svg>
+                            </div>
+                            <span class="text-rose-600 font-bold tracking-wider text-sm uppercase">BRAND STORY | 溫馨聆聽</span>
+                        </div>
+
+                        <h2 class="text-3xl font-bold text-slate-900 mb-6 leading-snug flex items-center gap-2">
+                            讓記憶留在最美的時光 
+                            <span class="text-rose-500 text-2xl">❤️</span>
+                        </h2>
+                        
+                        <div class="space-y-5 text-slate-700 text-base md:text-lg leading-relaxed font-light">
+                            <p>每個人都會變老，但我們希望，變老的過程可以不要那麼孤單。</p>
+                            <p>我們發現，許多長輩不是不需要陪伴，而是複雜的智慧科技讓他們感到挫折，或者，只要治療師一離開，好不容易好轉的心情 and 記憶，就又停了下來。</p>
+                            <p>於是，我們決定把最先進 of AI 音樂治療與情緒陪伴，悄悄裝進長輩最熟悉、最會操作的復古收音機裡。</p>
+                            <p>不用勉強去學新科技，更不需要鏡頭時時刻刻監控。我們想用一首首老歌，喚醒他們腦海中的美好記憶；在家人不在身邊的日子裡，用旋律聽懂他們沒說出口的孤單。</p>
+                            <p class="font-medium text-amber-900 mt-6 pt-4 border-t border-rose-200/50 flex items-start gap-2">
+                                <span class="text-rose-500 mt-1 shrink-0">🤗</span>
+                                <span>這就是我們的初衷：用最溫暖、最不打擾的方式，守護獨居長輩的笑容與尊嚴。</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右側：功能特色區塊 -->
+                <div id="features" class="lg:col-span-7 flex flex-col justify-center scroll-mt-24">
+                    <div class="mb-10">
+                        <span class="text-amber-600 font-semibold tracking-wider text-sm uppercase block mb-2">FEATURES</span>
+                        <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                            為什麼選擇拾光收音機？
+                        </h2>
+                        <div class="w-16 h-1 bg-amber-500 rounded-full"></div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <!-- 卡片 1 -->
+                        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 card-hover transition-all flex flex-col sm:flex-row items-start gap-4">
+                            <div class="w-12 h-12 bg-rose-50 rounded-xl flex items-center justify-center shrink-0 text-rose-500 shadow-sm">
+                                <!-- 溫慢愛心結合節奏波形 SVG -->
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 10h.01M15 10h.01M12 14h.01"/></svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">精準節律介入 (RMT)</h3>
+                                <p class="text-slate-600 text-sm">利用專業節奏音樂介入，顯著提升長者的認知流暢度與運動協調性。</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 卡片 2 -->
+                        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 card-hover transition-all flex flex-col sm:flex-row items-start gap-4">
+                            <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center shrink-0 text-amber-600 shadow-sm">
+                                <!-- 唱歌與關懷音符 SVG -->
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">互動式唱歌功能</h3>
+                                <p class="text-slate-600 text-sm">結合主動式音樂治療（AMT），引導長者開口唱歌，喚醒沉睡的情緒記憶。</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 卡片 3 -->
+                        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 card-hover transition-all flex flex-col sm:flex-row items-start gap-4">
+                            <div class="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center shrink-0 text-teal-600 shadow-sm">
+                                <!-- 心靈撫慰擁抱意象 SVG -->
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">情緒感官調節</h3>
+                                <p class="text-slate-600 text-sm">AI 即時監測情緒狀態，自動調節旋律與頻率，平衡自律神經並緩解焦慮。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 為您設計的小巧思（剖析市面長照科技痛點） -->
+    <section id="design-details" class="py-24 bg-gradient-to-tr from-rose-50/50 via-white to-amber-50/50 scroll-mt-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-16">
+                <span class="text-rose-600 font-semibold tracking-wider text-sm uppercase block mb-2">DESIGN INSIGHTS</span>
+                <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-4 flex items-center justify-center gap-2">
+                    設計的小巧思 💡
+                </h2>
+                <div class="w-20 h-1.5 bg-rose-400 mx-auto rounded-full"></div>
+                <p class="text-xl text-slate-700 mt-6 max-w-3xl mx-auto font-normal">
+                    為什麼現有的長照科技，離長輩的心還很遠？
+                </p>
+                <p class="text-slate-500 mt-2 max-w-2xl mx-auto font-light text-sm">
+                    我們看見了冰冷科技背後的「不適應與自卑感」，因此決定用溫柔無感、貼近日常的「收音機」來改變這一切。
+                </p>
+            </div>
+
+            <!-- 4 大痛點與拾光巧思的對比網格 -->
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <!-- 巧思卡片 1 -->
+                <div class="p-8 rounded-[2rem] bg-white border border-rose-100/50 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">💔</span>
+                            <h3 class="text-xl font-bold text-slate-900">痛點 1 ｜ 斷點式的照護</h3>
+                        </div>
+                        <p class="text-slate-500 text-sm mb-4 font-light">一離開治療室，笑容就停了</p>
+                        <p class="text-slate-600 text-base font-light leading-relaxed mb-6">
+                            專業的音樂治療雖然有效，但往往資源有限。一旦療程結束、治療師離開，好不容易累積的預防退化成效便難以延續。而市面上的智慧音箱又因語音機械化、無法應對複雜語境，很快就被長輩冷落在家中角落。
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-rose-100/40 bg-amber-50/40 p-4 rounded-2xl">
+                        <span class="text-xs font-semibold text-amber-700 block mb-1">✨ 拾光的溫柔解答</span>
+                        <p class="text-sm text-slate-700 font-light">
+                            把 AI 音樂治療與精準節律（RMT）悄悄融入長輩日常，不需要排隊預約，收音機隨時都在家裡播放溫暖旋律。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 巧思卡片 2 -->
+                <div class="p-8 rounded-[2rem] bg-white border border-rose-100/50 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">🥺</span>
+                            <h3 class="text-xl font-bold text-slate-900">痛點 2 ｜ 數位的挫折感</h3>
+                        </div>
+                        <p class="text-slate-500 text-sm mb-4 font-light">強迫改變，變成了心理負擔</p>
+                        <p class="text-slate-600 text-base font-light leading-relaxed mb-6">
+                            要阿公阿嬤對著機器精準喊出「嘿 Siri」，或是硬要他們戴上智慧手環，往往先帶來了「我又學不會、我老了、我生病了」的自卑與標籤效應。這種科技帶來的數位挫折，反而讓長輩心生抗拒。
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-rose-100/40 bg-teal-50/40 p-4 rounded-2xl">
+                        <span class="text-xs font-semibold text-teal-700 block mb-1">✨ 拾光的溫柔解答</span>
+                        <p class="text-sm text-slate-700 font-light">
+                            外觀就是最熟悉的復古收音機，保留實體旋鈕。阿公阿嬤不需學習新科技、不需開口，轉一轉旋鈕，音樂便自然流淌。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 巧思卡片 3 -->
+                <div class="p-8 rounded-[2rem] bg-white border border-rose-100/50 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">🕳️</span>
+                            <h3 class="text-xl font-bold text-slate-900">痛點 3 ｜ 被遺忘的心理斷層</h3>
+                        </div>
+                        <p class="text-slate-500 text-sm mb-4 font-light">只記錄作息，卻讀不懂孤單</p>
+                        <p class="text-slate-600 text-base font-light leading-relaxed mb-6">
+                            現有的偵測設備（如智慧燈泡、床墊、紅外線）只能被動記錄長輩有沒有起床、有沒有走動。這種「數據盲點」只能看見人還活著的訊號，卻完全察覺不到長輩日漸累積的憂鬱、落寞與心靈求救信號。
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-rose-100/40 bg-rose-50/40 p-4 rounded-2xl">
+                        <span class="text-xs font-semibold text-rose-700 block mb-1">✨ 拾光的溫柔解答</span>
+                        <p class="text-sm text-slate-700 font-light">
+                            我們不只關心長輩是否走動，更藉由語氣 and 行為數據感知其孤單，自動調節 RMT 音樂頻率，用旋律聽懂他們沒說出口的寂寞。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 巧思卡片 4 -->
+                <div class="p-8 rounded-[2rem] bg-white border border-rose-100/50 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">🔐</span>
+                            <h3 class="text-xl font-bold text-slate-900">痛點 4 ｜ 雲端監聽的隱私焦慮</h3>
+                        </div>
+                        <p class="text-slate-500 text-sm mb-4 font-light">籠罩在被監控的壓力下</p>
+                        <p class="text-slate-600 text-base font-light leading-relaxed mb-6">
+                            許多標榜 AI 語音助理的設備，因為需要將語音上傳雲端，頻傳的外流新聞讓長輩產生巨大的防備心。為了不讓私密家常話變成冰冷的雲端數據，長輩在設備前往往高度緊張、不敢隨意開口，失去了陪伴的初衷。
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-rose-100/40 bg-indigo-50/40 p-4 rounded-2xl">
+                        <span class="text-xs font-semibold text-indigo-700 block mb-1">✨ 拾光的溫柔解答</span>
+                        <p class="text-sm text-slate-700 font-light">
+                            完全不設置任何鏡頭與聲音錄製！只透過音樂偏好與微小的頻率交互進行行為感知，讓家常話依然是秘密，守護絕對的尊嚴與隱私。
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- 三大客群關懷欄位 -->
+    <section id="audience" class="py-24 bg-gradient-to-b from-white to-sky-50/50 scroll-mt-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-16">
+                <span class="text-rose-600 font-semibold tracking-wider text-sm uppercase block mb-2">OUR BENEFICIARIES</span>
+                <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-4 flex items-center justify-center gap-2">
+                    守護記憶：關懷三大客群 🌸
+                </h2>
+                <div class="w-20 h-1.5 bg-rose-400 mx-auto rounded-full"></div>
+                <p class="text-slate-600 mt-6 max-w-2xl mx-auto font-light">
+                    「拾光收音機」是連結長者、子女與專業社工之間的溫馨橋梁，用科技解決痛點，用愛傳遞溫暖。
+                </p>
+            </div>
+
+            <!-- 客群一覽網格 -->
+            <div class="grid md:grid-cols-3 gap-8 items-stretch">
+                
+                <!-- 客群 1: 獨居/失智長者 -->
+                <div class="p-8 rounded-[2rem] bg-gradient-to-b from-teal-50/70 to-teal-100/30 border border-teal-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 bg-teal-100 rounded-2xl flex items-center justify-center text-teal-600 mb-6 shadow-inner">
+                            <!-- 長者關懷圖示 -->
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-teal-900 mb-6">獨居 / 失智長者</h3>
+                        
+                        <div class="space-y-5">
+                            <div class="bg-white/80 p-4 rounded-xl border border-teal-50">
+                                <span class="text-xs font-semibold text-rose-500 block mb-1">🔍 痛點與困境</span>
+                                <p class="text-sm text-slate-700 font-light">感知記憶退化，容易產生恐懼與焦慮；抗拒繁瑣的醫院檢查，常與家人或醫生發生衝突。</p>
+                            </div>
+                            <div class="bg-white/80 p-4 rounded-xl border border-teal-50">
+                                <span class="text-xs font-semibold text-teal-600 block mb-1">🎁 我們的陪伴</span>
+                                <p class="text-sm text-slate-700 font-light">提供「去標籤化」的音樂守護，在無壓力、不被打擾的前提下，完美維持長輩的尊嚴與隱私。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 客群 2: 子女 -->
+                <div class="p-8 rounded-[2rem] bg-gradient-to-b from-amber-50/70 to-amber-100/30 border border-amber-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center text-amber-600 mb-6 shadow-inner">
+                            <!-- 溫馨家庭圖示 -->
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-amber-900 mb-6">出門在外的子女</h3>
+                        
+                        <div class="space-y-5">
+                            <div class="bg-white/80 p-4 rounded-xl border border-amber-50">
+                                <span class="text-xs font-semibold text-rose-500 block mb-1">🔍 痛點與困境</span>
+                                <p class="text-sm text-slate-700 font-light">在外工作無法即時陪伴；強行安裝監控設備反而引起長輩反感與衝突。</p>
+                            </div>
+                            <div class="bg-white/80 p-4 rounded-xl border border-amber-50">
+                                <span class="text-xs font-semibold text-amber-600 block mb-1">🎁 我們的陪伴</span>
+                                <p class="text-sm text-slate-700 font-light">免去監控鏡頭！透過收音機的互動數據「自然地掌握近況」，減少遺憾，建立踏實的安心感。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 客群 3: 照護社工 -->
+                <div class="p-8 rounded-[2rem] bg-gradient-to-b from-purple-50/70 to-purple-100/30 border border-purple-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center text-purple-600 mb-6 shadow-inner">
+                            <!-- 社工照護圖示 -->
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-purple-900 mb-6">第一線照護社工</h3>
+                        
+                        <div class="space-y-5">
+                            <div class="bg-white/80 p-4 rounded-xl border border-purple-50">
+                                <span class="text-xs font-semibold text-rose-500 block mb-1">🔍 痛點與困境</span>
+                                <p class="text-sm text-slate-700 font-light">個案量龐大、單次訪視時間極為有限；長輩時常在社工面前刻意掩飾真實的不適情況。</p>
+                            </div>
+                            <div class="bg-white/80 p-4 rounded-xl border border-purple-50">
+                                <span class="text-xs font-semibold text-purple-600 block mb-1">🎁 我們的陪伴</span>
+                                <p class="text-sm text-slate-700 font-light">提供長輩日常細微的情緒與作息數據，輔助社工進行最精準、最有溫度的個案量化評估。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 點擊展開原始心智架構圖 -->
+            <div class="mt-16 text-center">
+                <p class="text-slate-400 text-sm mb-4">想要了解「三大客群」更直觀的關係架構嗎?</p>
+                <button onclick="toggleMapModal()" class="inline-flex items-center gap-2 px-6 py-3 bg-rose-50 text-rose-600 font-bold rounded-full hover:bg-rose-100/80 transition-all border border-rose-100 shadow-sm text-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    展開完整心智架構圖
+                </button>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- 彈出視窗 (Modal) 用於展示上傳的三大客群概念圖 -->
+    <div id="map-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md transition-opacity duration-300">
+        <div class="bg-white rounded-[2rem] p-6 max-w-4xl w-full shadow-2xl relative overflow-hidden">
+            <div class="flex justify-between items-center mb-4">
+                <h4 class="text-xl font-bold text-slate-800">三大客群心智對照圖</h4>
+                <button onclick="toggleMapModal()" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition-colors">
+                    ✕
+                </button>
+            </div>
+            <!-- 嵌入你上傳的客群圖片 -->
+            <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 flex items-center justify-center p-2">
+                <img src="image_229779.png" alt="三大客群架構心智對照圖" class="max-h-[70vh] w-auto object-contain rounded-xl">
+            </div>
+        </div>
+    </div>
+
+    <!-- 產品模擬體驗區塊 -->
+    <section id="demo" class="py-24 bg-slate-900 text-white relative overflow-hidden scroll-mt-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <!-- 已將原本的標題改為：從收音機體驗滿滿情緒價值的拾光之旅~ -->
+                    <h2 class="text-4xl font-bold mb-6 flex items-center gap-3">
+                        <span>從收音機體驗滿滿情緒價值的拾光之旅~</span>
+                        <span class="text-rose-500 text-3xl animate-pulse">❤️</span>
+                    </h2>
+                    <p class="text-slate-400 text-lg mb-6 font-light">
+                        收音機會感知環境氛圍與長者的語氣，自動推薦最適合當下心理狀態的療癒音樂。請在右側測試看看我們的 AI 邏輯。
+                    </p>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-6 h-6 rounded-full bg-amber-500 mt-1"></div>
+                            <p><span class="font-bold text-amber-500">視覺偵測：</span> 識別長者面部微表情變化。</p>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-6 h-6 rounded-full bg-blue-500 mt-1"></div>
+                            <p><span class="font-bold text-blue-500">生理反饋：</span> 與穿戴設備同步心率與腦波數據。</p>
+                        </div>
+                    </div>
+
+                    <!-- APP 簡易使用說明與連結區塊 -->
+                    <div class="bg-white/10 p-6 rounded-2xl border border-white/10 backdrop-blur-sm mb-6 max-w-xl">
+                        <h3 class="text-lg font-bold text-amber-300 mb-3 flex items-center gap-2">
+                            <span>💡 APP 簡易使用說明</span>
+                        </h3>
+                        <p class="text-slate-200 text-sm font-light mb-4 leading-relaxed">
+                            系統提供兩種簡單的使用方式，讓你可以透過<strong>「音檔」</strong>或<strong>「麥克風錄音分析」</strong>來進行情緒分析，並自動播放對應的音樂：
+                        </p>
+                        <ul class="space-y-3 text-slate-300 text-sm font-light">
+                            <li class="flex gap-2">
+                                <span class="text-amber-400 font-bold">1.</span>
+                                <span>點擊下方「開啟拾光 APP」按鈕前往系統網頁介面。</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="text-amber-400 font-bold">2.</span>
+                                <span><strong>方法 A（音檔分析）：</strong>上傳或拖曳錄製好的長輩聲音語音檔來進行分析。</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="text-amber-400 font-bold">3.</span>
+                                <span>
+                                    <strong>方法 B（麥克風錄音分析）：</strong>直接授權麥克風進行即時對話。<strong>系統會自動偵測錄音內容，不需要手動按停止</strong>（請避免中途自行停止錄音，以免影響分析結果）。
+                                </span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="text-amber-400 font-bold">4.</span>
+                                <span>分析完成後，收音機會隨即為長輩播放量身調配的 RMT 音樂。</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- APP 網站外部連結按鈕 -->
+                    <a href="https://beryllian98-bit.github.io/emotion-radio/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-4 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-600 hover:to-rose-600 text-white font-bold rounded-xl shadow-lg transition-all transform hover:scale-105">
+                        <span>✨ 開啟拾光 APP 網頁版 🎵</span>
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                        </svg>
+                    </a>
+                </div>
+                
+                <div class="bg-white/10 p-8 rounded-[40px] border border-white/20 backdrop-blur-md">
+                    <div class="bg-slate-800 rounded-3xl p-6 shadow-2xl">
+                        <div class="text-center mb-6">
+                            <div id="mood-indicator" class="text-6xl mb-4 animate-pulse-soft">😊</div>
+                            <h4 id="mood-text" class="text-xl font-medium">當前狀態：平靜安適</h4>
+                        </div>
+                        
+                        <div class="bg-slate-900 rounded-2xl p-4 mb-6 border border-slate-700">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"></path></svg>
+                                </div>
+                                <div>
+                                    <p id="music-title" class="font-bold">莫札特：D大調雙鋼琴奏鳴曲</p>
+                                    <p id="music-desc" class="text-sm text-slate-400 italic">正在推薦適合平靜心情的 RMT 旋律...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 增加了擁抱陪伴按鈕 -->
+                        <div class="grid grid-cols-3 gap-2">
+                            <button onclick="simulateMood('sad')" class="py-2 px-3 bg-blue-600/20 border border-blue-600/40 rounded-xl hover:bg-blue-600/40 transition-all text-xs sm:text-sm">模擬焦慮狀態</button>
+                            <button onclick="simulateMood('happy')" class="py-2 px-3 bg-amber-600/20 border border-amber-600/40 rounded-xl hover:bg-amber-600/40 transition-all text-xs sm:text-sm">模擬愉悅狀態</button>
+                            <button onclick="simulateMood('hug')" class="py-2 px-3 bg-rose-600/20 border border-rose-600/40 rounded-xl hover:bg-rose-600/40 transition-all text-xs sm:text-sm flex items-center justify-center gap-1">
+                                <span>🤗 孤單陪伴</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 拾光能量的來源區塊（由科學實證溫馨改寫而成） -->
+    <section id="science" class="py-24 bg-white scroll-mt-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">拾光能量的來源 ✨</h2>
+            
+            <div class="space-y-12">
+                <!-- 01 能量來源 -->
+                <div class="flex gap-6 items-start">
+                    <!-- 3D 漸層發光燈泡 & 愛心 SVG 圖示 -->
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-50 to-pink-100/50 flex items-center justify-center shrink-0 shadow-[0_8px_20px_rgba(244,63,94,0.15)] relative">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10">
+                            <defs>
+                                <linearGradient id="glowBulbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#fda4af" />
+                                    <stop offset="100%" stop-color="#f43f5e" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M50 15C33 15 25 27 25 42C25 53 32 58 36 62C40 66 41 72 41 75H59C59 72 60 66 64 62C68 58 75 53 75 42C75 27 67 15 50 15Z" fill="url(#glowBulbGrad)" />
+                            <rect x="44" y="78" width="12" height="6" rx="2" fill="#be123c" />
+                            <path d="M50 30C46 30 44 32 44 35" stroke="#fff" stroke-width="3" stroke-linecap="round" />
+                            <!-- 小發光微粒 -->
+                            <circle cx="50" cy="50" r="3" fill="#fff" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2 text-slate-900">喚醒大腦的溫柔微光</h4>
+                        <p class="text-slate-600">透過長輩熟悉的音樂介入，能夠溫柔地活化大腦中的思考與記憶網絡。臨床研究指出，長期接觸這種精準預防的長者，其認知退化的速度較一般未受預防的長者大幅減緩約 30%。</p>
+                    </div>
+                </div>
+                
+                <!-- 02 能量來源 -->
+                <div class="flex gap-6 items-start">
+                    <!-- 3D 漸層情感彩色泡泡 & 音符 SVG 圖示 -->
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-50 to-indigo-100/50 flex items-center justify-center shrink-0 shadow-[0_8px_20px_rgba(139,92,246,0.15)] relative">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10">
+                            <defs>
+                                <linearGradient id="bubbleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#c084fc" />
+                                    <stop offset="100%" stop-color="#8b5cf6" />
+                                </linearGradient>
+                            </defs>
+                            <!-- 雙重泡泡堆疊 -->
+                            <circle cx="42" cy="58" r="22" fill="url(#bubbleGrad)" opacity="0.9" />
+                            <circle cx="64" cy="38" r="16" fill="url(#bubbleGrad)" opacity="0.6" />
+                            <!-- 閃光亮點 -->
+                            <circle cx="36" cy="46" r="4" fill="#fff" />
+                            <circle cx="60" cy="30" r="2.5" fill="#fff" />
+                            <!-- 飄動的愛心符號 -->
+                            <path d="M42 58C42 58 44 54 46 54C48 54 50 56 48 58C46 60 42 62 42 62C42 62 38 60 36 58C34 56 36 54 38 54C40 54 42 58 42 58Z" fill="#fff" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2 text-slate-900">連結情感的彩色泡泡</h4>
+                        <p class="text-slate-600">音樂是重啟美好記憶的神奇鑰匙。旋律可以直接喚醒海馬迴（Hippocampus）—— 這正是大腦中儲存最深、最美情感記憶的核心。即便日常對白漸漸淡去，那些烙印在心底的老歌，仍能源源不絕地釋放安心的療癒能量。</p>
+                    </div>
+                </div>
+                
+                <!-- 03 能量來源 -->
+                <div class="flex gap-6 items-start">
+                    <!-- 3D 漸層水波律動 & 舒適音符 SVG 圖示 -->
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-50 to-cyan-100/50 flex items-center justify-center shrink-0 shadow-[0_8px_20px_rgba(6,182,212,0.15)] relative">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10">
+                            <defs>
+                                <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#67e8f9" />
+                                    <stop offset="100%" stop-color="#06b6d4" />
+                                </linearGradient>
+                            </defs>
+                            <!-- 律動同心波紋 -->
+                            <circle cx="50" cy="50" r="34" stroke="url(#waveGrad)" stroke-width="6" opacity="0.3" />
+                            <circle cx="50" cy="50" r="22" stroke="url(#waveGrad)" stroke-width="6" opacity="0.6" />
+                            <circle cx="50" cy="50" r="10" fill="url(#waveGrad)" />
+                            <!-- 音符符頭 -->
+                            <ellipse cx="46" cy="46" rx="6" ry="4" transform="rotate(-15 46 46)" fill="#fff" />
+                            <rect x="50" y="24" width="4" height="22" rx="1.5" fill="#fff" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2 text-slate-900">安定心靈的靜謐旋律</h4>
+                        <p class="text-slate-600">不干擾、不勉強的背景音樂能安定自律神經系統。音樂治療能夠顯著降低長輩因失智或獨居引發的夜間躁動、憂鬱和失眠行為，為日常生活中增添一層隱形的安全感與寧靜能量。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 p-6 bg-slate-50 rounded-2xl border-l-4 border-amber-500 text-sm text-slate-500">
+                拾光能量科學背景說明：上述能量來源依據國際音樂治療與神經醫學期刊中 14 項臨床對照試驗（RCTs）及多份醫學文獻分析，將實證醫學轉化為最適合陪伴長輩的暖心關懷。
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA 區塊 -->
+    <section id="cta" class="py-24 bg-amber-600 scroll-mt-24">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6 flex items-center justify-center gap-2">
+                <span>為您的家人預約一份安心</span>
+                <span class="text-rose-200 text-3xl">❤️</span>
+            </h2>
+            <p class="text-amber-100 text-lg mb-10">
+                加入我們的「守護記憶計畫」，首批預訂可享免費專家遠端音樂治療諮詢一次。
+            </p>
+            
+            <form id="subscribe-form" onsubmit="handleForm(event)" class="max-w-lg mx-auto flex flex-col sm:flex-row gap-3">
+                <input type="email" required placeholder="輸入您的電子郵件" class="flex-grow px-6 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-white">
+                <button type="submit" class="bg-slate-900 text-white px-8 py-4 rounded-xl font-bold hover:bg-slate-800 transition-all shadow-xl">
+                    立即獲取資訊
+                </button>
+            </form>
+            <p id="form-msg" class="mt-4 text-white font-medium hidden">✅ 感謝訂閱！我們將盡快與您聯繫。</p>
+        </div>
+    </section>
+
+    <!-- 頁尾 -->
+    <footer class="py-12 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex justify-center items-center space-x-3 mb-6">
+                <img src="image_21aef6.jpg" alt="拾光收音機 Logo" class="h-10 w-auto object-contain rounded-full shadow-sm">
+                <span class="text-xl font-bold text-slate-900 font-calligraphy">拾光收音機</span>
+            </div>
+            <p class="text-slate-500 mb-4 text-sm flex items-center justify-center gap-1">
+                讓科技與愛同行，守護每一份珍貴的回憶。
+                <svg class="w-4 h-4 text-rose-500 fill-current inline" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4(15.36)2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </p>
+            <p class="text-slate-400 text-xs">&copy; 2024 拾光收音機 版權所有</p>
+        </div>
+    </footer>
+
+    <script>
+        // 控制架構圖 Modal 顯隱
+        function toggleMapModal() {
+            const modal = document.getElementById('map-modal');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                setTimeout(() => modal.style.opacity = '1', 50);
+            } else {
+                modal.style.opacity = '0';
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            }
+        }
+
+        // 模擬情緒偵測邏輯
+        function simulateMood(mood) {
+            const indicator = document.getElementById('mood-indicator');
+            const moodText = document.getElementById('mood-text');
+            const musicTitle = document.getElementById('music-title');
+            const musicDesc = document.getElementById('music-desc');
+            
+            if (mood === 'sad') {
+                indicator.innerText = '🥺';
+                moodText.innerText = '當前狀態：情緒焦慮';
+                musicTitle.innerText = '德布西：月光 (療癒版)';
+                musicDesc.innerText = '正在播放撫平情緒、降低焦慮的 RMT 旋律...';
+                moodText.className = 'text-xl font-medium text-blue-400';
+            } else if (mood === 'happy') {
+                indicator.innerText = '🥰';
+                moodText.innerText = '當前狀態：心情愉悅';
+                musicTitle.innerText = '韓德爾：皇家煙火 (歡慶版)';
+                musicDesc.innerText = '正在播放引導歡樂、輕快互動的音樂...';
+                moodText.className = 'text-xl font-medium text-amber-400';
+            } else if (mood === 'hug') {
+                indicator.innerText = '🤗';
+                moodText.innerText = '當前狀態：擁抱守護中';
+                musicTitle.innerText = '台灣民謠：望春風 (溫馨重奏版)';
+                musicDesc.innerText = '正在播放充滿懷舊回憶、如溫暖擁抱般的陪伴旋律...';
+                moodText.className = 'text-xl font-medium text-rose-400';
+            }
+        }
+
+        // 表單處理
+        function handleForm(e) {
+            e.preventDefault();
+            document.getElementById('subscribe-form').classList.add('hidden');
+            document.getElementById('form-msg').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
